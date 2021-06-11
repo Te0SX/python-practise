@@ -1,4 +1,5 @@
 import random
+import colorPalette as c
 
 def new_game(n):
 	grid = []
@@ -47,6 +48,13 @@ def game_state(grid):
 			return 'not over'
 	return 'lose'
 
+def reverse(grid):
+    new_grid = []
+    for i in range(len(grid)):
+        new_grid.append([])
+        for j in range(len(grid[0])):
+            new_grid[i].append(grid[i][len(grid[0])-j-1])
+    return new_grid
 
 def transpose(grid):
 	new_grid = []
@@ -54,6 +62,7 @@ def transpose(grid):
 		new_grid.append([])
 		for j in range(len(grid)):
 			new_grid[i].append(grid[j][i])
+	return new_grid
 
 
 # The way to do movement is compress -> merge -> compress again
@@ -94,7 +103,7 @@ def up(game):
 	game, done = cover_up(game)
 	game, done = merge(game, done)
 	game = cover_up(game)[0]
-	game = transpose(reverse(game))
+	game = transpose(game)
 	return game, done
 
 
