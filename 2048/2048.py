@@ -19,6 +19,7 @@ def add_two(grid):
 	grid[a][b] = 2
 	return grid
 
+
 def game_state(grid):
 	#check for winning cell
 	for i in range(len(grid)):
@@ -32,6 +33,7 @@ def game_state(grid):
 				return 'not over'
 	#check for same cells that tuch each other
 	for i in range(len(grid)-1):
+		# intentionally reduced to check the row on the right and below
 		for j in range(len(grid[0])-1):
 			if grid[i][j] == grid[i+1][j] or grid[i][j+1] == grid[i][j]:
 				return 'not over'
@@ -44,5 +46,48 @@ def game_state(grid):
 		if grid[l][len(grid)-1] == grid[l+1][len(grid)-1]:
 			return 'not over'
 	return 'lose'
+
+
+def transpose(grid):
+	new_grid = []
+	for i in range(len(grid[0])):
+		new_grid.append([])
+		for j in range(len(grid)):
+			new_grid[i].append(grid[j][i])
+
+
+# The way to do movement is compress -> merge -> compress again
+
+def cover_up(grid):
+	new_grid = []
+	for j in range(c.GRID_LEN):
+		partial_new_grid = []
+		for i in range(c.GRID_LEN):
+			partial_new_grid.append(0)
+		new_grid.append(partial_new_grid)
+	done = False
+	for i in range(c.GRID_LEN):
+		count = 0
+		for j in range(c.GRID_LEN):
+			if grid[i][j] != 0:
+				new_grid[i][count] = grid[i][j]
+				if j != count:
+					done = True
+				count += 1
+	return new_grid, done
+
+
+def merge(grid, done):
+	for i in range(c.GRID_LEN):
+		for j in range(c.GRID_LEN-1):
+			if grid[i][j] == grid[i][j+1] and grid[i][j] != 0:
+				grid[i][j] *= 2
+				grid[i][j+1] = 0
+				done = True
+	return grid, done
+
+
+
+
 
 	
