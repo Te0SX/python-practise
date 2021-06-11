@@ -87,7 +87,46 @@ def merge(grid, done):
 	return grid, done
 
 
+def up(game):
+	print("up")
+	# return grid after shifting up
+	game = transpose(game)
+	game, done = cover_up(game)
+	game, done = merge(game, done)
+	game = cover_up(game)[0]
+	game = transpose(reverse(game))
+	return game, done
 
 
+def down(game):
+	print("down")
+	# return grid after shifting down
+	game = reverse(transpose(game))
+	game, done = cover_up(game)
+	game, done = merge(game, done)
+	game = cover_up(game)[0]
+	game = transpose(reverse(game))
+	return game, done
+
+
+def right(game):
+	print("down")
+	# return matrix after shifting right
+	game = reverse(game)
+	game, done = cover_up(game)
+	game, done = merge(game, done)
+	game = cover_up(game)[0]
+	game = reverse(game)
+	return game, done
+
+
+def left(game):
+    print("left")
+    # return matrix after shifting left
+    game, done = cover_up(game)
+    game, done = merge(game, done)
+    game = cover_up(game)[0]
+    return game, done
+	
 
 	
